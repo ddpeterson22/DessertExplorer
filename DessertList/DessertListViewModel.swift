@@ -10,8 +10,14 @@ import Foundation
 class DessertListViewModel: ObservableObject {
     
     @Published var meals = [Meal]()
-    @Published var selectedMeal: Meal?
     private let dessertCategory = "dessert"
+    
+    init(meals: [Meal] = [Meal]()) {
+        self.meals = meals
+        fetchDesserts {
+            print("Dessert fetched.")
+        }
+    }
     
     func fetchDesserts(completion: @escaping () -> () ) {
         

@@ -83,7 +83,7 @@ struct MealDetail: Decodable, Hashable, Identifiable {
     }
     
     func getInstructionsText() -> String {
-        return instructions.replacingOccurrences(of: "\n", with: "\n\n")
+        return "Instructions: " + instructions.replacingOccurrences(of: "\n", with: "\n\n")
     }
 }
 

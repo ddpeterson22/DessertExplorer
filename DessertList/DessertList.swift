@@ -7,19 +7,23 @@
 
 import SwiftUI
 
+// TODO:  Improve fetching data to only as needed, look into caching images.
+
 struct DessertList: View {
     
     @EnvironmentObject var mealServices: MealServices
     @ObservedObject var viewModel = DessertListViewModel()
     
     var body: some View {
-        List(viewModel.meals, id: \.id) { meal in
-            MealRow(meal: meal)
-        }
-        .onAppear { // TODO:  Improve fetching to only happen as needed, look into caching images.
-            viewModel.fetchDesserts {
-                print("view Model fetched.")
+        NavigationStack {
+            List(viewModel.meals, id: \.id) { meal in
+                NavigationLink {
+                    DessertDetail(mealMeta: meal)
+                } label: {
+                    MealRow(meal: meal)
+                }
             }
+            .navigationTitle("Desserts")
         }
     }
 }
