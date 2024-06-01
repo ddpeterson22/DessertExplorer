@@ -11,7 +11,7 @@ import SwiftUI
 struct DessertExplorerApp: App {
     var body: some Scene {
         WindowGroup {
-            DessertListView()
+            DessertList()
         }
     }
 }

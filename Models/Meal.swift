@@ -7,18 +7,19 @@
 
 import Foundation
 
-struct Meal: Decodable, Hashable {
-  let id: String
-  let name: String
-  let imageUrlString: String
-  
-  enum CodingKeys: String, CodingKey {
-    case id = "idMeal"
-    case name = "strMeal"
-    case imageUrlString = "strMealThumb"
-  }
+struct Meal: Decodable, Hashable, Identifiable {
+    let id: String
+    let name: String
+    let imageUrlString: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "idMeal"
+        case name = "strMeal"
+        case imageUrlString = "strMealThumb"
+    }
+    
 }
 
 struct MealResponse: Decodable {
-  let meals: [Meal]
+    let meals: [Meal]
 }
