@@ -6,6 +6,9 @@
 //
 
 import XCTest
+import Quick
+import Nimble
+
 @testable import DessertExplorer
 
 final class DessertExplorerTests: XCTestCase {
