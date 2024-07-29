@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DessertDetail: View {
-    @EnvironmentObject var mealServices: MealServices
     @ObservedObject var viewModel = DessertDetailViewModel()
     var mealMeta: Meal
     
@@ -42,6 +41,7 @@ struct DessertDetail: View {
         } else {
             ProgressView()
                 .onAppear {
+                    //  Todo:  research best practices on swiftUI data flows to child views, specifically around retrieval.; Should data retrieval be initiated from 1. parent (faster but breaks encapsulation), or should this be handled in 2. fully encapsulated child (it knows what it needs and retrieves it when it needs it, less handoff in parent).  What pattern is most maintainable and testable?
                     viewModel.fetchMeal(with: mealMeta.id) {
                         print("Meal detail for \(mealMeta.name) fetched.")
                     }
@@ -52,5 +52,4 @@ struct DessertDetail: View {
 
 #Preview {
     DessertDetail(mealMeta: Meal(id: "52793", name: "Sticky Toffee Pudding Ultimate", imageUrlString: "https://www.themealdb.com/images/media/meals/xrptpq1483909204.jpg"))
-        .environmentObject(MealServices())
 }

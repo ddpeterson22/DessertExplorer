@@ -11,7 +11,6 @@ import SwiftUI
 
 struct DessertList: View {
     
-    @EnvironmentObject var mealServices: MealServices
     @ObservedObject var viewModel = DessertListViewModel()
     
     var body: some View {
@@ -30,5 +29,4 @@ struct DessertList: View {
 
 #Preview {
     DessertList()
-        .environmentObject(MealServices())
 }
