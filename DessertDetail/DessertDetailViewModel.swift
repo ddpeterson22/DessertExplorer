@@ -9,7 +9,7 @@ import Foundation
 
 class DessertDetailViewModel: ObservableObject {
     
-    @Published var meal: MealDetail?
+    @Published private(set) var meal: MealDetail?
     
     func fetchMeal(with id: String, completion: @escaping () -> () ) {
         MealServices.shared.fetchMeal(with: id) { result in

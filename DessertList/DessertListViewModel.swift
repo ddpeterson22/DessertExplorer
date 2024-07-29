@@ -9,7 +9,7 @@ import Foundation
 
 class DessertListViewModel: ObservableObject {
     
-    @Published var meals = [Meal]()
+    @Published private(set) var meals = [Meal]()
     private let dessertCategory = "dessert"
     
     init(meals: [Meal] = [Meal]()) {
