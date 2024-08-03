@@ -42,10 +42,10 @@ struct DessertDetail: View {
             ProgressView()
                 .onAppear {
                     //  Todo:  research best practices on swiftUI data flows to child views, specifically around retrieval.; Should data retrieval be initiated from 1. parent (faster but breaks encapsulation), or should this be handled in 2. fully encapsulated child (it knows what it needs and retrieves it when it needs it, less handoff in parent).  What pattern is most maintainable and testable?
-                    viewModel.fetchMeal(with: mealMeta.id) {
-                        print("Meal detail for \(mealMeta.name) fetched.")
-                    }
-                    //viewModel.fetchMealUsingCombine(with: mealMeta.id)
+//                    viewModel.fetchMeal(with: mealMeta.id) {
+//                        print("Meal detail for \(mealMeta.name) fetched.")
+//                    }
+                    viewModel.fetchMealUsingCombine(with: mealMeta.id)
                 }
         }
     }

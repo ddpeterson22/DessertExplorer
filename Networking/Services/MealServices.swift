@@ -13,8 +13,8 @@ protocol MealService {
     func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ())
     func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ())
     // Combine's new way -- wrapping result in Publisher
-    func pubFetch(for category: String) -> AnyPublisher<APIResponse<MealResponse>, APIError>
-    func pubFetchDetail(with id: String) -> AnyPublisher<APIResponse<MealDetailResponse>, APIError>
+    func pubFetch(for category: String) -> AnyPublisher<MealResponse, APIError>
+    func pubFetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError>
 }
 
 class MealServiceProvider: MealService {
@@ -30,11 +30,11 @@ class MealServiceProvider: MealService {
         apiClient.request(.fetchDetail(id: id), completion: completion)
     }
     
-    func pubFetch(for category: String) -> AnyPublisher<APIResponse<MealResponse>, APIError> {
+    func pubFetch(for category: String) -> AnyPublisher<MealResponse, APIError> {
         return apiClient.requestPubbed(.fetch(category: category))
     }
     
-    func pubFetchDetail(with id: String) -> AnyPublisher<APIResponse<MealDetailResponse>, APIError> {
+    func pubFetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError> {
         return apiClient.requestPubbed(.fetchDetail(id: id))
     }
 }

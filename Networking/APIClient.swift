@@ -99,7 +99,7 @@ class CoreAPIClient<Endpoint: APIEndpoint>: APIClient {
         endpoint.headers?.forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
 
         return session.dataTaskPublisher(for: request)
-            .subscribe(on: DispatchQueue.global(qos: .background)) // TODO: expose interface to make this configurable
+            .subscribe(on: DispatchQueue.global(qos: .background))
             .tryMap { data, response -> Data in
                 guard let response = response as? HTTPURLResponse else {
                     throw APIError.requestFailed
