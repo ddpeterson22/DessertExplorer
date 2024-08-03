@@ -6,8 +6,38 @@
 //
 
 import Foundation
+import Combine
 
-// -- Tech debt considerations: Should project grow - build out URI config, organize endpoints, protocols as needed
+protocol MealService {
+    // Traditional way
+    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ())
+    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ())
+    // Combine's new way -- wrapping result in Publisher
+    func pubFetch(for category: String) -> AnyPublisher<APIResponse<MealResponse>, APIError>
+    func pubFetchDetail(with id: String) -> AnyPublisher<APIResponse<MealDetailResponse>, APIError>
+}
+
+class MealServiceProvider: MealService {
+    
+    private let apiClient = CoreAPIClient<MealEndpoint>()
+    init() {}
+    
+    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ()) {
+        apiClient.request(.fetch(category: category), completion: completion)
+    }
+    
+    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ()) {
+        apiClient.request(.fetchDetail(id: id), completion: completion)
+    }
+    
+    func pubFetch(for category: String) -> AnyPublisher<APIResponse<MealResponse>, APIError> {
+        return apiClient.requestPubbed(.fetch(category: category))
+    }
+    
+    func pubFetchDetail(with id: String) -> AnyPublisher<APIResponse<MealDetailResponse>, APIError> {
+        return apiClient.requestPubbed(.fetchDetail(id: id))
+    }
+}
 
 class MealServices: ObservableObject {
     
@@ -27,6 +57,7 @@ class MealServices: ObservableObject {
     
     fileprivate func fetchData<T: Decodable>(urlString: String, completion: @escaping (Result<T, Error>) -> () ) {
         guard let url = URL(string: urlString) else { return }
+        print("\(url.absoluteString)")
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
@@ -51,11 +82,5 @@ class MealServices: ObservableObject {
             }
             
         }.resume()
-    }
-}
-
-extension Data {
-    func decoded<T: Decodable>() throws -> T {
-        return try JSONDecoder().decode(T.self, from: self)
     }
 }

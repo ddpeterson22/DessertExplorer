@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DessertDetail: View {
-    @ObservedObject var viewModel = DessertDetailViewModel()
+    @StateObject private var viewModel = DessertDetailViewModel(mealService: MealServiceProvider())
     var mealMeta: Meal
     
     var body: some View {
@@ -45,6 +45,7 @@ struct DessertDetail: View {
                     viewModel.fetchMeal(with: mealMeta.id) {
                         print("Meal detail for \(mealMeta.name) fetched.")
                     }
+                    //viewModel.fetchMealUsingCombine(with: mealMeta.id)
                 }
         }
     }

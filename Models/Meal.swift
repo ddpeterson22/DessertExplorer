@@ -20,6 +20,6 @@ struct Meal: Decodable, Hashable, Identifiable {
     
 }
 
-struct MealResponse: Decodable {
+struct MealResponse: Decodable, Equatable {
     let meals: [Meal]
 }
