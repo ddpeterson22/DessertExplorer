@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 protocol MealService {
-    // Traditional way
-    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ())
-    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ())
+//    // Traditional way
+//    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ())
+//    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ())
     // Combine's new way -- wrapping result in Publisher
-    func pubFetch(for category: String) -> AnyPublisher<MealResponse, APIError>
-    func pubFetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError>
+    func fetch(for category: String) -> AnyPublisher<MealResponse, APIError>
+    func fetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError>
 }
 
 class MealServiceProvider: MealService {
@@ -22,20 +22,20 @@ class MealServiceProvider: MealService {
     private let apiClient = CoreAPIClient<MealEndpoint>()
     init() {}
     
-    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ()) {
-        apiClient.request(.fetch(category: category), completion: completion)
+//    func fetch(for category: String, completion: @escaping (Result<MealResponse, APIError>) -> ()) {
+//        apiClient.request(.fetch(category: category), completion: completion)
+//    }
+//    
+//    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ()) {
+//        apiClient.request(.fetchDetail(id: id), completion: completion)
+//    }
+    
+    func fetch(for category: String) -> AnyPublisher<MealResponse, APIError> {
+        return apiClient.request(.fetch(category: category))
     }
     
-    func fetchDetail(with id: String, completion: @escaping (Result<MealDetailResponse, APIError>) -> ()) {
-        apiClient.request(.fetchDetail(id: id), completion: completion)
-    }
-    
-    func pubFetch(for category: String) -> AnyPublisher<MealResponse, APIError> {
-        return apiClient.requestPubbed(.fetch(category: category))
-    }
-    
-    func pubFetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError> {
-        return apiClient.requestPubbed(.fetchDetail(id: id))
+    func fetchDetail(with id: String) -> AnyPublisher<MealDetailResponse, APIError> {
+        return apiClient.request(.fetchDetail(id: id))
     }
 }
 
