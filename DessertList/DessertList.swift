@@ -11,7 +11,7 @@ import SwiftUI
 
 struct DessertList: View {
     
-    @ObservedObject var viewModel = DessertListViewModel()
+    @ObservedObject var viewModel = DessertListViewModel(mealService: MealServiceProvider())
     
     var body: some View {
         NavigationStack {

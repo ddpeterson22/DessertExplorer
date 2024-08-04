@@ -40,53 +40,6 @@ class CoreAPIClient<Endpoint: APIEndpoint>: APIClient {
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
-
-//    // traditional request
-//    func request<T: Decodable>(_ endpoint: Endpoint, completion: @escaping (Result<T, APIError>) -> () ) {
-//        
-//        // config endpoint
-//        guard let url = endpoint.formedURL else {
-//            DispatchQueue.main.async {
-//                completion(.failure(APIError.requestFailed))
-//            }
-//            return
-//        }
-//        print("\(url.absoluteString)")
-//        var request = URLRequest(url: url)
-//        request.httpMethod = endpoint.method.rawValue
-//        request.httpBody = endpoint.body
-//        endpoint.headers?.forEach { request.addValue($0.value, forHTTPHeaderField: $0.key) }
-//        
-//        session.dataTask(with: request) { data, response, error in
-//            if error != nil {
-//                DispatchQueue.main.async {
-//                    completion(.failure(APIError.requestFailed))
-//                }
-//            }
-//            if let response = response as? HTTPURLResponse {
-//                guard (200 ... 299).contains(response.statusCode) else {
-//                    DispatchQueue.main.async {
-//                        completion(.failure(APIError.customError(statusCode: response.statusCode)))
-//                    }
-//                    return
-//                }
-//            }
-//
-//            guard let data = data else { return }
-//            
-//            do {
-//                let decoded: T = try data.decoded()
-//                DispatchQueue.main.async {
-//                    completion(.success(decoded))
-//                }
-//            }
-//            catch _ {
-//                DispatchQueue.main.async {
-//                    completion(.failure(APIError.decodingFailed))
-//                }
-//            }
-//        }.resume()
-//    }
     
     // API request with output wrapped in Publisher.  See Combine.
     func request<T: Decodable>(_ endpoint: Endpoint) -> AnyPublisher<T, APIError> {
@@ -122,15 +75,15 @@ class CoreAPIClient<Endpoint: APIEndpoint>: APIClient {
 
 // MARK: - Helpers
 
-struct APIResponse<T: Decodable>: Decodable {
-    let status: String
-    let data: T?
-    
-    init(status: String, data: T?) {
-        self.status = status
-        self.data = data
-    }
-}
+//struct APIResponse<T: Decodable>: Decodable {
+//    let status: String
+//    let data: T?
+//    
+//    init(status: String, data: T?) {
+//        self.status = status
+//        self.data = data
+//    }
+//}
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -146,11 +99,11 @@ enum APIError: Error, Equatable {
     case customError(statusCode: Int)
 }
 
-extension APIResponse {
-    public var success: Bool {
-        status == "success" || status == "200"
-    }
-}
+//extension APIResponse {
+//    public var success: Bool {
+//        status == "success" || status == "200"
+//    }
+//}
 extension Data {
     func decoded<T: Decodable>() throws -> T {
         return try JSONDecoder().decode(T.self, from: self)

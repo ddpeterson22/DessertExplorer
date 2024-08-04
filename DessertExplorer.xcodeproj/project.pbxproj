@@ -192,7 +192,6 @@
 		A2601A542C027B5200562B41 /* DessertList */ = {
 			isa = PBXGroup;
 			children = (
-				A26D59682C5985D800538BC9 /* New Group */,
 				A2601A552C027B8700562B41 /* DessertListViewModel.swift */,
 				A2601A5B2C0B86A800562B41 /* MealRow.swift */,
 				A2601A5D2C0B86FF00562B41 /* DessertList.swift */,
@@ -215,13 +214,6 @@
 				A26D59662C586ACD00538BC9 /* MockURLProtocol.swift */,
 			);
 			path = Mocks;
-			sourceTree = "<group>";
-		};
-		A26D59682C5985D800538BC9 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		A26D59692C5985F000538BC9 /* Networking */ = {

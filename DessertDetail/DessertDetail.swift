@@ -45,7 +45,7 @@ struct DessertDetail: View {
 //                    viewModel.fetchMeal(with: mealMeta.id) {
 //                        print("Meal detail for \(mealMeta.name) fetched.")
 //                    }
-                    viewModel.fetchMealUsingCombine(with: mealMeta.id)
+                    viewModel.fetchMeal(with: mealMeta.id)
                 }
         }
     }

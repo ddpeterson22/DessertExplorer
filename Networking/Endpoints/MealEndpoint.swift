@@ -7,9 +7,6 @@
 
 import Foundation
 
-// todo: 1 . get this to work
-//       2. Minimize outside accessibiliity -- "public" is the furthest from private.
-
 enum MealEndpoint: APIEndpoint {
     case fetch(category: String)
     case fetchDetail(id: String)

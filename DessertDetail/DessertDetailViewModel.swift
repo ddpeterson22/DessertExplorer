@@ -27,22 +27,9 @@ class DessertDetailViewModel: ObservableObject {
         self.mealService = mealService
     }
     
-    // Traditional way
-    func fetchMeal(with id: String, completion: @escaping () -> () ) {
-        mealService.fetchDetail(with: id) { result in
-            switch result {
-            case .failure(let error):
-                print("Failed to fetch meal. Error: \(error)")
-            case .success(let response):
-                self.meal = response.meals[0]
-                completion()
-            }
-        }
-    }
-    
     // Combine way
-    func fetchMealUsingCombine(with id: String) {
-        mealService.pubFetchDetail(with: id)
+    func fetchMeal(with id: String) {
+        mealService.fetchDetail(with: id)
             .receive(on: RunLoop.main)
             .sink { completion in
                 guard case let .failure(error) = completion else { return }
@@ -53,5 +40,4 @@ class DessertDetailViewModel: ObservableObject {
             }
             .store(in: &cancellableSet)
     }
-    
 }
